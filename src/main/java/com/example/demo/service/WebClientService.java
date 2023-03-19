@@ -12,13 +12,14 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class WebClientService {
 
+    private final WebClientConfig webClientConfig;
+    private final SearchService searchService;
     @Value("${KAKAO_API_KEY}")
     private Object API_KEY;
 
-    private final WebClientConfig webClientConfig;
-
     public String getKakao(String query, String sort, int size, int page) {
         WebClient webClient = webClientConfig.getBaseUrl("https://dapi.kakao.com");
+        searchService.saveKeyword(query); // 인기검색어 출력을 위해 검색 된 키워드(query)를 따로 저장한다.
         return webClient.get().uri(uriBuilder -> uriBuilder.path("/v2/search/blog")
                         .queryParam("query", query)
                         .queryParam("sort", sort)
@@ -34,6 +35,7 @@ public class WebClientService {
                     }
                 })
                 .block();
+
     }
 
 }
