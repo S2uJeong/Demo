@@ -1,0 +1,28 @@
+server:
+  servlet:
+    encoding:
+      force-response: true
+  port: 8080
+
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  datasource:
+    hikari:
+      jdbc-url: jdbc:h2:tcp://localhost/~/demo-db
+    driver-class-name: org.h2.Driver
+    username : sa
+    password: 1234
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    properties:
+      hibernate:
+        show-sql: true
+        format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create
